@@ -39,10 +39,11 @@ Make sure you have Love2D installed on your machine. You can download it from th
    ```bash
    git clone https://github.com/gfmois/LuaLovePong.git
    cd LuaLovePong
-   
-   # Run the game
-   love .
     ````
+2. Run the game
+   ```bash
+   love .
+   ```
 
 ## Usage
 Launch the game, and you'll be presented with the Pong screen. Use the controls mentioned in the Controls section to play the game.
