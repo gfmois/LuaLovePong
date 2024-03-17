@@ -28,6 +28,8 @@ Constants.Player = {
     LEFT_PLAYER = {
         UP = 'w',
         DOWN = 's',
+        X = 50,
+        Y = 250
     },
     RIGHT_PLAYER = {
         UP = "up",

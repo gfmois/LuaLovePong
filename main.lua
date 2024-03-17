@@ -1,6 +1,7 @@
 require("model.Paddle")
 require("model.Ball")
 require ("model.Window")
+require("model.Scoreboard")
 
 local Menu = require("model.Menu")
 local Utils = require("utils.Utils") 
@@ -14,9 +15,10 @@ local PlayerOptions = Constants.Player
 
 -- To pass an Window Model
 local menu = Menu:new()
+local scoreboard = Scoreboard:new()
 
 -- Paddle and ball initialization
-local leftPaddle = Paddle:new(50, 250, PaddleOptions.WIDTH, PaddleOptions.HEIGHT, PaddleOptions.SPEED, PlayerOptions.LEFT_PLAYER)
+local leftPaddle = Paddle:new(PlayerOptions.LEFT_PLAYER.X, PlayerOptions.LEFT_PLAYER.Y, PaddleOptions.WIDTH, PaddleOptions.HEIGHT, PaddleOptions.SPEED, PlayerOptions.LEFT_PLAYER)
 local rightPaddle = Paddle:new(740, 250, PaddleOptions.WIDTH, PaddleOptions.HEIGHT, PaddleOptions.SPEED, PlayerOptions.RIGHT_PLAYER)
 local topPaddle = Paddle:new(370, 50, PaddleOptions.HEIGHT, PaddleOptions.WIDTH, PaddleOptions.SPEED, PlayerOptions.TOP_PLAYER, true)
 local bottomPaddle = Paddle:new(370, 545, PaddleOptions.HEIGHT, PaddleOptions.WIDTH, PaddleOptions.SPEED, PlayerOptions.BOTTOM_PLAYER, true)
@@ -81,7 +83,7 @@ function love.update(dt)
         updatePaddles(dt)
         ball:update(dt)
         handleCollisions()
-        updateScoreboard()
+        scoreboard:update(ball, menu.currentState)
     end
 end
 
@@ -90,7 +92,7 @@ function love.draw()
     if menu.currentState == States.MENU then
         drawMenu()
     elseif menu.currentState == States.DEFAULT_GAME or isMultiple then
-        drawScore()
+        scoreboard:draw(menu.currentState)
         drawPaddlesAndBall()
     end
 end
@@ -122,12 +124,6 @@ function updatePaddles(dt)
         topPaddle:movePaddle(dt)
         bottomPaddle:movePaddle(dt)
     end
-end
-
--- Function to draw the score
-function drawScore()
-    love.graphics.print("Player 1: " .. score.player1, 10, 10)
-    love.graphics.print("Player 2: " .. score.player2, love.graphics.getWidth() - 100, 10)
 end
 
 -- Function to handle collisions
